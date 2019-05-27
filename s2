@@ -1,0 +1,68 @@
+const SQUARE_WIDTH = 10;
+const SQUARE_FILL_COLOR = "black";
+const SQUARE_STROKE_COLOR = "blue";
+
+const SPEED = 10;
+
+const canvas = document.getElementById("gameCanvas");
+const WIDTH = canvas.width;
+const HEIGHT = canvas.width;
+
+const snake = {
+  x: 10,
+  y: 10,
+  dx: SPEED,
+  dy: 0
+};
+
+const ctx = gameCanvas.getContext("2d");
+document.addEventListener("keydown", changeDirection);
+
+main();
+
+function moveSnake() {
+  snake.x += snake.dx;
+  snake.y += snake.dy;
+}
+
+function main() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawSquare(snake.x, snake.y);
+  moveSnake();
+  setTimeout(main, 100);
+}
+function drawSquare(x, y) {
+  ctx.fillStyle = SQUARE_FILL_COLOR;
+  ctx.strokeStyle = SQUARE_STROKE_COLOR;
+  ctx.fillRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+  ctx.strokeRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+}
+
+function changeDirection(event) {
+  const LEFT_KEY = 37;
+  const RIGHT_KEY = 39;
+  const UP_KEY = 38;
+  const DOWN_KEY = 40;
+
+  const keyPressed = event.keyCode;
+
+  if (keyPressed === LEFT_KEY) {
+    snake.dx = -SPEED;
+    snake.dy = 0;
+  }
+
+  if (keyPressed === UP_KEY) {
+    snake.dx = 0;
+    snake.dy = -SPEED;
+  }
+
+  if (keyPressed === RIGHT_KEY) {
+    snake.dx = SPEED;
+    snake.dy = 0;
+  }
+
+  if (keyPressed === DOWN_KEY) {
+    snake.dx = 0;
+    snake.dy = SPEED;
+  }
+}
